@@ -24,3 +24,9 @@ def getTourCost(tour, cost_graph):
         this_flight_cost = cost_graph[flight[0]][flight[1]]
         cost += this_flight_cost
     return cost
+
+# returns a list of tours
+def swap(tour):
+    list_of_tours = []
+
+
