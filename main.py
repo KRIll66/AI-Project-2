@@ -17,7 +17,7 @@ def main():
         #inner loop handles user input, ensures valid input type and value of cities
         #num_cities must be an integer greater than 1
         while True:
-            user_input = input("To begin, select the number of cities you wish to vist:")
+            user_input = input("To begin, select the number of cities you wish to vist: ")
             try:
                 num_cities = int(user_input)
                 if num_cities > 1:
@@ -38,7 +38,7 @@ def main():
         #!!!!!!ENTER THE SEARCH ALGORITHM ABOVE HERE!!!!!!
 
         #Exit protocol, if user is finished then sys.exit()
-        user_input = input("Would you like to run the program again?, Enter 'Y' to continue or any other key to exit:")
+        user_input = input("Would you like to run the program again?, Enter 'Y' to continue or any other key to exit: ")
         if user_input is not 'Y' and user_input is not 'y': sys.exit()
 
 if __name__=='__main__':
