@@ -26,7 +26,7 @@ class Grid:
         self.startingTour = [()]
         self.numCities = numCities
 
-
+    
     #populates the costGraph with random costs
     def setGrid(self):
         for x in range(self.numCities) :
