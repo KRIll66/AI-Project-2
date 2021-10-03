@@ -1,3 +1,5 @@
+import copy
+
 import grid
 
 ################################################################
@@ -42,7 +44,7 @@ def swapListOfTours(tourlist):
     first_city = tourlist[0]
     tourlist.remove(0)
     child_tours = []
-    while i < (len(tourlist) - 1):
+    while i < len(tourlist) - 1:
         j = i + 1
         while j < len(tourlist):
             arr = swap(tourlist, i, j)
@@ -57,7 +59,9 @@ def swapListOfTours(tourlist):
     return child_tours
 
 def swap(list, i, j):
-    templist = list
+    print('i = ', i)
+    print('j = ', j)
+    templist = copy.deepcopy(list)
     templist[i], templist[j] = templist[j], templist[i]
     return templist
 
