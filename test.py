@@ -30,6 +30,7 @@ def main():
 
     
     child_tours = swapListOfTours(tour1)
+    print("all child tours from start tour: ", child_tours)
 
 
 

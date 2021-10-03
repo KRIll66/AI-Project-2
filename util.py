@@ -42,30 +42,32 @@ def getTourCost(tour, cost_graph):
     return cost
 
 
-
-
-def swapListOfTours(tourlist):
+# finds all child tours of a parent tour and returns them in a list
+# note that each child tour differs only slightly from the parent tour
+# (each child tour is the parent tour with two cities swapped)
+# also not that the first city in the list is never swapped since it's the home city
+def getChildTours(tourlist):
     i = 0
     first_city = tourlist[0]
     tourlist.remove(0)
     child_tours = []
+    arr = []
     while i < len(tourlist) - 1:
         j = i + 1
         while j < len(tourlist):
-            arr = swap(tourlist, i, j)
-            print(arr)
-            arr.insert(0, first_city)
-            child_tours.append(arr)
-            print(j)
+            arr2 = copy.deepcopy(arr)
+            arr2 = swap(tourlist, i, j)
+            arr2.insert(0, first_city)
+            child_tours.append(arr2)
             j = j + 1
-            arr.clear()
         i = i + 1
 
     return child_tours
 
+
+# makes a deepcopy of a tour passed in, and then swaps two cities in that deepcopy
+# returns the deepcopy, the original tour is not altered
 def swap(list, i, j):
-    print('i = ', i)
-    print('j = ', j)
     templist = copy.deepcopy(list)
     templist[i], templist[j] = templist[j], templist[i]
     return templist
