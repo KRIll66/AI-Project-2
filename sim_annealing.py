@@ -52,15 +52,15 @@ class SimAnneal(object):
 
     def p_accept(self, candidate_fitness):
         """
-        Probability of accepting if the candidate is worse than current.
-        Depends on the current temperature and difference between candidate and current.
+        #Probability of accepting if the candidate is worse than current.
+        #Depends on the current temperature and difference between candidate and current.
         """
         return math.exp(-abs(candidate_fitness - self.cur_fitness) / self.T)
 
     def accept(self, candidate):
         """
-        Accept with probability 1 if candidate is better than current.
-        Accept with probabilty p_accept(..) if candidate is worse.
+        #Accept with probability 1 if candidate is better than current.
+        #Accept with probabilty p_accept(..) if candidate is worse.
         """
         candidate_fitness = self.fitness(candidate)
         if candidate_fitness < self.cur_fitness:
@@ -69,5 +69,5 @@ class SimAnneal(object):
                 self.best_fitness, self.best_solution = candidate_fitness, candidate
         else:
             if random.random() < self.p_accept(candidate_fitness):
-                self.cur_fitness, self.cur_solution = candidate_fitness, candidate
-"""
+                self.cur_fitness, self.cur_solution = candidate_fitness, candidate"""
+

@@ -27,43 +27,40 @@ def getTourCost(tour, cost_graph):
         cost += this_flight_cost
     return cost
 
-# Takes in a tour in (x, y) format and returns it as a list
-# For example: (1, 2) (2, 3) (3, 4) (4, 1) would be converted to [1, 2, 3, 4]
-def convertTourToList(tour):
-    i = 0
-    city_array = []
-    while i < len(tour):
-        temp = tour[i]
-        city_array.append(temp[0])
-        i = i + 1
-    return city_array
 
-# NOT working properly yet! Both loops only run once.
-def swapListOfTours(tourlist):
+# generates all possible child states from a parent state passed in and returns them as a list
+# note that each child tour only differs from the parent state by 1 swap
+# (i.e. two cities have switched places)
+def getListOfTours(tourlist):
     i = 0
     first_city = tourlist[0]
     tourlist.remove(0)
     child_tours = []
+    arr = []
     while i < len(tourlist) - 1:
         j = i + 1
         while j < len(tourlist):
-            arr = swap(tourlist, i, j)
-            print(arr)
-            arr.insert(0, first_city)
-            child_tours.append(arr)
-            print(j)
+            arr2 = copy.deepcopy(arr)
+            arr2 = swap(tourlist, i, j)
+            arr2.insert(0, first_city)
+            child_tours.append(arr2)
+            print(child_tours)
             j = j + 1
             arr.clear()
         i = i + 1
-
+    child_tours.remove(0)
     return child_tours
 
+
+# makes a deepcopy of a list and then swaps the two items at that list in index i and j
+# returns the deepcopy of the list, which has the two items swapped
+# original list passed in remains unaltered
 def swap(list, i, j):
-    print('i = ', i)
-    print('j = ', j)
     templist = copy.deepcopy(list)
     templist[i], templist[j] = templist[j], templist[i]
     return templist
+
+
 
 
 

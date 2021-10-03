@@ -27,9 +27,12 @@ def main():
     tour_1_cost = getTourCost(tour1, cost_graph)
     print ("Tour 1 cost:", tour_1_cost)
 
-    arr = convertTourToList(tour1)
-    print(arr)
-    child_tours = swapListOfTours(arr)
+
+    swapped_tours = getListOfTours(tour1)
+    print(swapped_tours)
+
+
+
 
 
 
