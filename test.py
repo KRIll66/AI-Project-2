@@ -1,5 +1,6 @@
 from math import cos
-import grid, util
+import grid
+from util import *
 
 
 #################################################
@@ -20,11 +21,20 @@ def main():
     cost_graph = myGrid.getGrid()
     
     tour1 = myGrid.getRandomTour()
-    print (tour1)
+    print(tour1)
     
 
-    tour_1_cost = util.getTourCost(tour1, cost_graph)
+    tour_1_cost = getTourCost(tour1, cost_graph)
     print ("Tour 1 cost:", tour_1_cost)
+
+    arr = convertTourToList(tour1)
+    print(arr)
+    child_tours = swapListOfTours(arr)
+
+
+
+
+
     
 if __name__=='__main__':
         main()

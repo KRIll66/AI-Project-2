@@ -29,7 +29,7 @@ class Grid:
 
     #populates the costGraph with random costs
     def setGrid(self):
-        for x in range(self.numCities) :
+        for x in range(self.numCities):
             for y in range(self.numCities):               
                 #cannot fly from Anchorage to Anchorage
                 if (x == y):
@@ -68,4 +68,4 @@ class Grid:
 
     def displayGrid (self):
         for row in self.costGraph:
-            print (row)
+            print(row)
