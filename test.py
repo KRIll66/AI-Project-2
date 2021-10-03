@@ -14,7 +14,7 @@ from util import *
 def main():
     
     #myGrid is a grid object
-    myGrid = grid.Grid(5)         
+    myGrid = grid.Grid(4)         
     myGrid.setGrid()
     myGrid.displayGrid()
     #cost_graph has the grid of flight costs
@@ -22,17 +22,14 @@ def main():
     
     tour1 = myGrid.getRandomTour()
     print(tour1)
-    
+    tour2 = myGrid.getRandomTour()
+    print (tour2)    
 
     tour_1_cost = getTourCost(tour1, cost_graph)
-    print ("Tour 1 cost:", tour_1_cost)
+    print ("Tour 1 cost:", tour_1_cost)  
 
-
-    swapped_tours = getListOfTours(tour1)
-    print(swapped_tours)
-
-
-
+    
+    child_tours = swapListOfTours(tour1)
 
 
 

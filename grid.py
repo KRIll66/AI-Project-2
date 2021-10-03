@@ -38,28 +38,24 @@ class Grid:
                     self.costGraph[x][y] = random.randrange(100, 2500)
 
 
-    #ensure every city gets visited only once, return the tour as a list of sets [(1,0), (0,3),...]
+    #takes the number of cities and generates a random tour of those cites
+    #home city remains the home city always
     def getRandomTour(self):
          
         city_list = []
         for i in range(self.numCities):
-            city_list.append(i) 
+            city_list.append(i)        
+        print("Original City List: ", city_list)
 
-        #remove home city and reinsert at beginning of randomized tour
-        homeCity = city_list.pop(0)
-        random.shuffle(city_list)       
-        city_list.insert(0, homeCity)
-        #return home at end our tour
-        city_list.append(homeCity)
+        #remove home city, shuffle the other cities, then insert home city back
+        #at the start of the list
+        home_city = city_list.pop(0)
+        random.shuffle(city_list)
+        city_list.insert(0,home_city)
 
-        #build list of cost grid coordinate sets (represents the tour)
-        tour = []
-        for i in range(len(city_list)):
-            if i == len(city_list)-1:
-                break
-            tour.append((city_list[i], city_list[i+1]))
-            
-        return tour
+        print("Randomized City List: ", city_list)
+
+        return city_list
 
 
     def getGrid(self):

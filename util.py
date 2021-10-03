@@ -19,48 +19,56 @@ import grid
 
 
 #calculate the cost for this tour, return cost as an integer
+#Change TourCost to receive a tour as a list (example lsit of [0-4] is [0,1,2,3,4])
+#return cost as an integer
 def getTourCost(tour, cost_graph):
     cost = 0
     
-    for flight in tour:
+    #create list of coordinates for flight costs
+    #add home city to end of tour list
+    tour.append(tour[0])
+
+    #build list of cost grid coordinate sets (represents the tour)
+    tour_coordinates = []
+    for i in range(len(tour)):
+        if i == len(tour)-1:
+            break
+        tour_coordinates.append((tour[i], tour[i+1]))
+    
+
+    for flight in tour_coordinates:
         this_flight_cost = cost_graph[flight[0]][flight[1]]
         cost += this_flight_cost
     return cost
 
 
-# generates all possible child states from a parent state passed in and returns them as a list
-# note that each child tour only differs from the parent state by 1 swap
-# (i.e. two cities have switched places)
-def getListOfTours(tourlist):
+
+
+def swapListOfTours(tourlist):
     i = 0
     first_city = tourlist[0]
     tourlist.remove(0)
     child_tours = []
-    arr = []
     while i < len(tourlist) - 1:
         j = i + 1
         while j < len(tourlist):
-            arr2 = copy.deepcopy(arr)
-            arr2 = swap(tourlist, i, j)
-            arr2.insert(0, first_city)
-            child_tours.append(arr2)
-            print(child_tours)
+            arr = swap(tourlist, i, j)
+            print(arr)
+            arr.insert(0, first_city)
+            child_tours.append(arr)
+            print(j)
             j = j + 1
             arr.clear()
         i = i + 1
-    child_tours.remove(0)
+
     return child_tours
 
-
-# makes a deepcopy of a list and then swaps the two items at that list in index i and j
-# returns the deepcopy of the list, which has the two items swapped
-# original list passed in remains unaltered
 def swap(list, i, j):
+    print('i = ', i)
+    print('j = ', j)
     templist = copy.deepcopy(list)
     templist[i], templist[j] = templist[j], templist[i]
     return templist
-
-
 
 
 
