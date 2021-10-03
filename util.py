@@ -19,26 +19,31 @@ import grid
 
 
 #calculate the cost for this tour, return cost as an integer
+#Change TourCost to receive a tour as a list (example lsit of [0-4] is [0,1,2,3,4])
+#return cost as an integer
 def getTourCost(tour, cost_graph):
     cost = 0
     
-    for flight in tour:
+    #create list of coordinates for flight costs
+    #add home city to end of tour list
+    tour.append(tour[0])
+
+    #build list of cost grid coordinate sets (represents the tour)
+    tour_coordinates = []
+    for i in range(len(tour)):
+        if i == len(tour)-1:
+            break
+        tour_coordinates.append((tour[i], tour[i+1]))
+    
+
+    for flight in tour_coordinates:
         this_flight_cost = cost_graph[flight[0]][flight[1]]
         cost += this_flight_cost
     return cost
 
-# Takes in a tour in (x, y) format and returns it as a list
-# For example: (1, 2) (2, 3) (3, 4) (4, 1) would be converted to [1, 2, 3, 4]
-def convertTourToList(tour):
-    i = 0
-    city_array = []
-    while i < len(tour):
-        temp = tour[i]
-        city_array.append(temp[0])
-        i = i + 1
-    return city_array
 
-# NOT working properly yet! Both loops only run once.
+
+
 def swapListOfTours(tourlist):
     i = 0
     first_city = tourlist[0]
