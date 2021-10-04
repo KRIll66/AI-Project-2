@@ -45,7 +45,7 @@ class Grid:
         city_list = []
         for i in range(self.numCities):
             city_list.append(i)        
-        print("Original City List: ", city_list)
+        #print("Original City List: ", city_list)
 
         #remove home city, shuffle the other cities, then insert home city back
         #at the start of the list
@@ -53,7 +53,7 @@ class Grid:
         random.shuffle(city_list)
         city_list.insert(0,home_city)
 
-        print("Randomized City List: ", city_list)
+        #print("Randomized City List: ", city_list)
 
         return city_list
 

@@ -51,7 +51,7 @@ def getTourCost(tour, cost_graph):
 # (each child tour is the parent tour with two cities swapped)
 # also not that the first city in the list is never swapped since it's the home city
 def getChildTours(tourlist):
-    print("tour passed in: ", tourlist)
+    #print("tour passed in: ", tourlist)
     i = 0
     first_city = tourlist[0]
     tourlist.remove(0)

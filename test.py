@@ -15,25 +15,21 @@ from util import *
 def main():
     
     #myGrid is a grid object
-    myGrid = grid.Grid(4)         
+    myGrid = grid.Grid(5)         
     myGrid.setGrid()
     myGrid.displayGrid()
     #cost_graph has the grid of flight costs
     cost_graph = myGrid.getGrid()
     
-    tour1 = myGrid.getRandomTour()
-    print(tour1)
-    
-    tour_1_cost = getTourCost(tour1, cost_graph)
-    print ("Tour 1 cost:", tour_1_cost)  
-
+    #must set the original starting tour prior to calling search functions
+    tour1 = myGrid.getRandomTour()    
     myGrid.startingTour = tour1
 
-    print ("start tour", myGrid.startingTour)    
-    hc = hillclimbing.HillClimbing(myGrid)
-    print("start tour", hc.start_tour)
-    hc.calculateBestTour()
-    print("better tour", hc.best_tour)
+       
+    hc = hillclimbing.HillClimbing(myGrid)   
+    hc.randomRestart(5)
+
+    print("best tour", hc.best_tour, "for cost of: ", getTourCost(hc.best_tour, cost_graph))
 
 
 

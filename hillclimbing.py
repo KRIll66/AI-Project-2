@@ -10,6 +10,8 @@ class HillClimbing:
         # our best state at the moment
         self.grid = grid
         self.best_tour = grid.startingTour
+        self.best_cost = getTourCost(grid.startingTour, grid.costGraph)
+        self.better_tour = grid.startingTour
         self.start_tour = grid.startingTour
         self.cost_graph = grid.costGraph
 
@@ -23,11 +25,11 @@ class HillClimbing:
 
         # copy the current start tour into current_tour
         current_tour = copy.deepcopy(self.start_tour)
-        print("current tour: ", current_tour)
+        #print("current tour: ", current_tour)
 
         while True:
             cost = getTourCost(current_tour, self.cost_graph)
-            print("cost: ", cost)
+            #print("cost: ", cost)
 
             # gets all child states from current config
             # (each child state is the current state with 2 cities swapped)
@@ -36,18 +38,22 @@ class HillClimbing:
             # if any child state is better than the current state, we replace the
             # current state with that child state
             for tour in child_tours:
-                print("child tour: ", tour)
+                #print("child tour: ", tour)
                 if getTourCost(tour, self.cost_graph) < getTourCost(current_tour, self.cost_graph):
                     current_tour = copy.deepcopy(tour)
-                    print("current tour", current_tour)
+                    #print("current tour", current_tour)
 
             # if current_state cost is the same as the cost we recording at the beginning of the loop,
             # we know current_state hasn't changed (i.e. it wasn't replaced with one of its child states)
             # This means we are at a maximum or plateau so we exit the loop
             if getTourCost(current_tour, self.cost_graph) == cost:
-                # update the best tour
-                self.best_tour = copy.deepcopy(current_tour)
-                break;
+                # update the best tour adn best tour cost if this is a new best result
+                if getTourCost(current_tour, self.cost_graph) < self.best_cost:
+                    self.best_tour = copy.deepcopy(current_tour)
+                    self.best_cost = getTourCost(current_tour, self.cost_graph)
+                #update the better tour for this search iteration
+                self.better_tour = copy.deepcopy(current_tour)
+                break
 
     # sets the start tour to whatever is passed in
     def setStartTour(self, tour):
@@ -58,21 +64,25 @@ class HillClimbing:
     # of finding a better solution than the one already found
     def randomRestart(self, num_restarts):
 
+        print("\nThe starting tour is: ", self.start_tour, " with a cost of: ", self.best_cost)
         # does initial run, which calculates the best_tour
         self.calculateBestTour()
-
+        print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
         i = 0
         # loops as many times as specified by num_restarts (minus one because of the initial run)
         while i < num_restarts - 1:
             # get a random start tour (note: may be one we've already done,
             # due to the nature of the hill climbing algorithm we don't know and don't care
-            random_tour = grid.getRandomTour()
+            random_tour = self.grid.getRandomTour()
 
             # set the starting tour to the one we randomly just got
             self.setStartTour(random_tour)
-
+            print("The new random starting tour is: ", self.start_tour, " with a cost of: ", getTourCost(self.start_tour, self.cost_graph))
             # calculate the best tour from the start tour
             self.calculateBestTour()
+            print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
+            #decrement restart count
+            num_restarts-=1
 
     def getBestTour(self):
         return self.best_tour
