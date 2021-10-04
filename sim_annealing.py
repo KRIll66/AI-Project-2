@@ -10,9 +10,10 @@ class SimAnneal(object):
         self.start_tour = grid.startingTour
         self.best_tour = copy.deepcopy(self.start_tour)
         self.curr_tour = None
+        self.curr_cost = 0
         self.T = math.sqrt(self.grid.num_cities) if self.T == -1 else self.T
         self.stopping_temperature = 1e-8 if self.stopping_temperature == -1 else self.stopping_temperature
-        self.best_fitness = float("Inf")
+        self.best_cost = float("Inf")
         self.tour_list = []
         self.alpha = 0.995 if self.alpha == -1 else self.alpha 
         self.stopping_iter = 1e6 if self.stopping_iter == -1 else self.stopping_iter
@@ -21,16 +22,14 @@ class SimAnneal(object):
     # Simulated Annealing core algorithm
     def anneal(self):
 
-        curr_tour = self.start_tour
-        
+        temp_thing = self.curr_tour
+
         while self.T >= self.stopping_temperature and self.iteration < self.stopping_iter:
-            
-            self.accept(curr_tour)
+            temp_thing = self.swap(temp_thing)
+            self.accept(temp_thing)
             self.T *= self.alpha
             self.iteration += 1
-            self.tour_list.append(curr_tour)
-        
-
+            
         
 
 
@@ -38,36 +37,32 @@ class SimAnneal(object):
     def swap(self, tour):
         
         #choose to random cities
-        city1 = random.randint(1, len(tour)-2)
-        city2 = random.randint(1, len(tour)-2)
+        city1 = random.randint(1, len(tour)-1)
+        city2 = random.randint(1, len(tour)-1)
 
         #swap cities in tour
-        tour[city1], tour[city1+1], tour[city2], tour[city2+1] = tour[city2], tour[city2+1], tour[city1], tour[city1+1]
+        tour[city1], tour[city2] = tour[city2], tour[city1]
         
         #return modified tour
         return tour
 
-"""
 
 
-    def p_accept(self, candidate_fitness):
-        """
-        Probability of accepting if the candidate is worse than current.
-        Depends on the current temperature and difference between candidate and current.
-        """
-        return math.exp(-abs(candidate_fitness - self.cur_fitness) / self.T)
+    def p_accept(self, candidate_cost):
+
+        return math.exp(-abs(candidate_cost - self.curr_cost) / self.T)
 
     def accept(self, candidate):
-        """
-        Accept with probability 1 if candidate is better than current.
-        Accept with probabilty p_accept(..) if candidate is worse.
-        """
-        candidate_fitness = self.fitness(candidate)
-        if candidate_fitness < self.cur_fitness:
-            self.cur_fitness, self.cur_solution = candidate_fitness, candidate
-            if candidate_fitness < self.best_fitness:
-                self.best_fitness, self.best_solution = candidate_fitness, candidate
+
+        candidate_cost = util.getTourCost(candidate)
+        if candidate_cost < self.curr_cost:
+            self.curr_cost, self.curr_tour = candidate_cost, candidate
+            self.tour_list.append(candidate)
+            if candidate_cost < self.best_cost:
+                self.best_cost, self.best_solution = candidate_cost, candidate
+                
         else:
-            if random.random() < self.p_accept(candidate_fitness):
-                self.cur_fitness, self.cur_solution = candidate_fitness, candidate"""
+            if random.random() < self.p_accept(candidate_cost):
+                self.curr_cost, self.curr_tour = candidate_cost, candidate
+                self.tour_list.append(candidate)
 
