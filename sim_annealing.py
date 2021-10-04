@@ -9,14 +9,14 @@ class SimAnneal(object):
         self.grid = grid
         self.start_tour = grid.startingTour
         self.best_tour = copy.deepcopy(self.start_tour)
-        self.curr_tour = None
-        self.curr_cost = 0
-        self.T = math.sqrt(self.grid.num_cities) if self.T == -1 else self.T
-        self.stopping_temperature = 1e-8 if self.stopping_temperature == -1 else self.stopping_temperature
+        self.curr_tour = grid.startingTour
+        self.curr_cost = util.getTourCost( self.curr_tour, grid.costGraph)
+        self.T = math.sqrt(self.grid.numCities) 
+        self.stopping_temperature = 1e-8 
         self.best_cost = float("Inf")
         self.tour_list = []
-        self.alpha = 0.995 if self.alpha == -1 else self.alpha 
-        self.stopping_iter = 1e6 if self.stopping_iter == -1 else self.stopping_iter
+        self.alpha = 0.995 
+        self.stopping_iter = 1e6 
         self.iteration = 1
 
     # Simulated Annealing core algorithm
@@ -30,21 +30,19 @@ class SimAnneal(object):
             self.T *= self.alpha
             self.iteration += 1
             
-        
-
-
-
     def swap(self, tour):
         
         #choose to random cities
         city1 = random.randint(1, len(tour)-1)
         city2 = random.randint(1, len(tour)-1)
-
+        #print(city1)
+        #print(city2)
         #swap cities in tour
-        tour[city1], tour[city2] = tour[city2], tour[city1]
+        temp = copy.deepcopy(tour)
+        temp[city1], temp[city2] = temp[city2], temp[city1]
         
         #return modified tour
-        return tour
+        return temp
 
 
 
@@ -54,7 +52,7 @@ class SimAnneal(object):
 
     def accept(self, candidate):
 
-        candidate_cost = util.getTourCost(candidate)
+        candidate_cost = util.getTourCost(candidate, self.grid.costGraph)
         if candidate_cost < self.curr_cost:
             self.curr_cost, self.curr_tour = candidate_cost, candidate
             self.tour_list.append(candidate)
