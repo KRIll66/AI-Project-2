@@ -23,14 +23,13 @@ def main():
     
     tour1 = myGrid.getRandomTour()
     print(tour1)
-    tour2 = myGrid.getRandomTour()
-    print (tour2)    
-
+    
     tour_1_cost = getTourCost(tour1, cost_graph)
     print ("Tour 1 cost:", tour_1_cost)  
 
     myGrid.startingTour = tour1
-    
+
+    print ("start tour", myGrid.startingTour)    
     hc = hillclimbing.HillClimbing(myGrid)
     print("start tour", hc.start_tour)
     hc.calculateBestTour()

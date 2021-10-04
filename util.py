@@ -23,22 +23,26 @@ import grid
 #return cost as an integer
 def getTourCost(tour, cost_graph):
     cost = 0
-    
+    copy_of_tour = []
+    for i in tour:
+        copy_of_tour.append(i)
     #create list of coordinates for flight costs
     #add home city to end of tour list
-    tour.append(tour[0])
+    copy_of_tour.append(copy_of_tour[0])
 
     #build list of cost grid coordinate sets (represents the tour)
     tour_coordinates = []
-    for i in range(len(tour)):
-        if i == len(tour)-1:
+    for i in range(len(copy_of_tour)):
+        if i == len(copy_of_tour)-1:
             break
-        tour_coordinates.append((tour[i], tour[i+1]))
+        tour_coordinates.append((copy_of_tour[i], copy_of_tour[i+1]))
     
 
     for flight in tour_coordinates:
         this_flight_cost = cost_graph[flight[0]][flight[1]]
         cost += this_flight_cost
+
+    copy_of_tour.clear()
     return cost
 
 
@@ -62,7 +66,7 @@ def getChildTours(tourlist):
             child_tours.append(arr2)
             j = j + 1
         i = i + 1
-
+    tourlist.insert(0, 0)
     return child_tours
 
 

@@ -23,7 +23,7 @@ class Grid:
     #constructor, only receives number of cities from main
     def __init__(self, numCities):
         self.costGraph = [[0 for i in range(numCities)] for j in range (numCities)]
-        self.startingTour = [()]
+        self.startingTour = []
         self.numCities = numCities
 
     
