@@ -1,6 +1,6 @@
 from math import cos
 import grid
-import hillclimbing
+import hillclimbing, sim_annealing
 from util import *
 
 
@@ -25,7 +25,10 @@ def main():
     tour1 = myGrid.getRandomTour()    
     myGrid.startingTour = tour1
 
-       
+    anneal = sim_annealing.SimAnneal(myGrid)
+    anneal.anneal()
+    print ("simulated annealing best cost: ", anneal.best_cost)
+
     hc = hillclimbing.HillClimbing(myGrid)   
     hc.randomRestart(5)
 
