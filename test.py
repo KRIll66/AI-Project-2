@@ -28,6 +28,7 @@ def main():
     anneal = sim_annealing.SimAnneal(myGrid)
     anneal.anneal()
     print ("simulated annealing best cost: ", anneal.best_cost)
+    print ("sim annealing best state is: ", anneal.best_tour)
 
     hc = hillclimbing.HillClimbing(myGrid)   
     hc.randomRestart(5)
