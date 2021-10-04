@@ -1,5 +1,6 @@
 from math import cos
 import grid
+import hillclimbing
 from util import *
 
 
@@ -28,9 +29,13 @@ def main():
     tour_1_cost = getTourCost(tour1, cost_graph)
     print ("Tour 1 cost:", tour_1_cost)  
 
+    myGrid.startingTour = tour1
     
-    child_tours = swapListOfTours(tour1)
-    print("all child tours from start tour: ", child_tours)
+    hc = hillclimbing.HillClimbing(myGrid)
+    print("start tour", hc.start_tour)
+    hc.calculateBestTour()
+    print("better tour", hc.best_tour)
+
 
 
 

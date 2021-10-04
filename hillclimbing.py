@@ -11,6 +11,7 @@ class HillClimbing:
         self.grid = grid
         self.best_tour = grid.startingTour
         self.start_tour = grid.startingTour
+        self.cost_graph = grid.costGraph
 
     # This method uses the hill-climbing algorithm to (try) find better tours than the one it starts with
     # It returns when it reaches a maximum or a plateau
@@ -19,32 +20,38 @@ class HillClimbing:
     # Note that self.best_tour may not be updated every time this method is called, since the maximum/plateau
     # found in a run might not be better than the maximum/plateau found in other runs
     def calculateBestTour(self):
-        current_tour = self.start_tour
+
+        # copy the current start tour into current_tour
+        current_tour = copy.deepcopy(self.start_tour)
+        print("current tour: ", current_tour)
 
         while True:
-            temp = current_tour
+            cost = getTourCost(current_tour, self.cost_graph)
+            print("cost: ", cost)
 
             # gets all child states from current config
             # (each child state is the current state with 2 cities swapped)
-            child_tours = swap(current_tour)
+            child_tours = getChildTours(current_tour)
 
             # if any child state is better than the current state, we replace the
             # current state with that child state
             for tour in child_tours:
-                if getTourCost(tour, tour.costGraph) < getTourCost(current_tour, current_tour.costGraph):
-                    current_tour = tour
-                    # update the best tour
-                    self.best_tour = current_tour
+                print("child tour: ", tour)
+                if getTourCost(tour, self.cost_graph) < getTourCost(current_tour, self.cost_graph):
+                    current_tour = copy.deepcopy(tour)
+                    print("current tour", current_tour)
 
-            # if current_state is the same as temp, we know it hasn't changed (i.e. it wasn't
-            # replaced with one of its child states. This means we are at a maximum or plateau
-            # so we exit the loop
-            if current_tour == temp:
+            # if current_state cost is the same as the cost we recording at the beginning of the loop,
+            # we know current_state hasn't changed (i.e. it wasn't replaced with one of its child states)
+            # This means we are at a maximum or plateau so we exit the loop
+            if getTourCost(current_tour, self.cost_graph) == cost:
+                # update the best tour
+                self.best_tour = copy.deepcopy(current_tour)
                 break;
 
     # sets the start tour to whatever is passed in
     def setStartTour(self, tour):
-        self.start_tour = tour
+        self.start_tour = copy.deepcopy(tour)
 
     # This method runs the hill climbing algorithm using random restart
     # Each time it "randomly restarts" the algorithm, it gives it random new start tour in hopes
