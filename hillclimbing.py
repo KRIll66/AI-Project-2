@@ -67,7 +67,7 @@ class HillClimbing:
         print("\nThe starting tour is: ", self.start_tour, " with a cost of: ", self.best_cost)
         # does initial run, which calculates the best_tour
         self.calculateBestTour()
-        print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
+        #print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
         i = 0
         # loops as many times as specified by num_restarts (minus one because of the initial run)
         while i < num_restarts - 1:
@@ -77,10 +77,10 @@ class HillClimbing:
 
             # set the starting tour to the one we randomly just got
             self.setStartTour(random_tour)
-            print("The new random starting tour is: ", self.start_tour, " with a cost of: ", getTourCost(self.start_tour, self.cost_graph))
+           # print("The new random starting tour is: ", self.start_tour, " with a cost of: ", getTourCost(self.start_tour, self.cost_graph))
             # calculate the best tour from the start tour
             self.calculateBestTour()
-            print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
+            #print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
             #decrement restart count
             num_restarts-=1
 

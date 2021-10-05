@@ -15,7 +15,7 @@ from util import *
 def main():
     
     #myGrid is a grid object
-    myGrid = grid.Grid(10)         
+    myGrid = grid.Grid(20)         
     myGrid.setGrid()
     myGrid.displayGrid()
     #cost_graph has the grid of flight costs
