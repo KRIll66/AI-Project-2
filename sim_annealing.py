@@ -24,7 +24,7 @@ class SimAnneal(object):
         self.stopping_temperature = 1e-200
         self.best_cost = float("Inf")
         self.tour_list = []
-        self.alpha = 0.995
+        self.alpha = 0.999
         self.stopping_iter = 1e10
         self.iteration = 1
 
