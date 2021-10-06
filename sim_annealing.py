@@ -12,9 +12,6 @@ import math, random, copy, util
 class SimAnneal(object):
 
     def __init__(self, grid):
-    
-        # we set best_config to startconfig because technically start_config is
-        # our best state at the moment
         self.grid = grid
         self.start_tour = grid.startingTour
         self.best_tour = copy.deepcopy(self.start_tour)
@@ -36,7 +33,6 @@ class SimAnneal(object):
         self.best_cost = float("Inf")
         self.iteration = 1
         self.T = math.sqrt(self.grid.numCities)
-        self.start_tour
         self.start_tour = self.grid.startingTour
 
     # Simulated Annealing core algorithm
@@ -44,10 +40,10 @@ class SimAnneal(object):
 
         temp_thing = self.curr_tour
         
-        while self.T >= self.stopping_temperature : #and self.iteration < self.stopping_iter:
+        while self.T >= self.stopping_temperature : 
             temp_thing = self.swap(temp_thing)           
             self.accept(temp_thing)
-            self.T *= self.alpha
+            self.T *= self.alpha #cooling schedule
             self.iteration += 1
             
     def swap(self, tour):
@@ -63,14 +59,17 @@ class SimAnneal(object):
         #return modified tour
         return temp
 
-
-    
+    # return the probability of acceptance
+    # takes the difference between ost of the candiate tour and the  cost of the last tour, (curr_cost)
+    # acceptance calculation is e^([canidcate-curr_cost]/Cooling Temp)
     def p_accept(self, candidate_cost):
-
         return math.exp(-abs(candidate_cost - self.curr_cost) / self.T)
 
+    # acceptance logic, if candidate is better than current, candidate is new current and add candidate to tour list 
+    # if candidate is the best tour, save as best tour and best cost
+    # else is where the probability a random value is compared to probablity of acceptance and if accepted treat that tour as you would a better tour.
     def accept(self, candidate):
-
+        # get coust of tour
         candidate_cost = util.getTourCost(candidate, self.grid.costGraph)
         
         if candidate_cost < self.curr_cost:
