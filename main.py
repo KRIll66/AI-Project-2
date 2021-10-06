@@ -9,7 +9,7 @@ import grid, util, sys, sim_annealing, hillclimbing
 def main():
     user_input = 0
     # run random restart 100 times
-    num_iterations = 1
+    num_iterations = 100
     best_hc_tour = []
     best_hc_cost = inf
     best_sim_tour = []
