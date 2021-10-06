@@ -14,6 +14,17 @@ class HillClimbing:
         self.better_tour = grid.startingTour
         self.start_tour = grid.startingTour
         self.cost_graph = grid.costGraph
+        self.num_children = 0
+
+
+    #reset hillclimbing attributes for the next run
+    def reset (self):
+        self.best_tour = self.grid.startingTour
+        self.best_cost = getTourCost(self.grid.startingTour, self.grid.costGraph)
+        self.better_tour = self.grid.startingTour
+        self.start_tour = self.grid.startingTour
+        self.num_children = 0
+
 
     # This method uses the hill-climbing algorithm to (try) find better tours than the one it starts with
     # It returns when it reaches a maximum or a plateau
@@ -38,6 +49,7 @@ class HillClimbing:
             # if any child state is better than the current state, we replace the
             # current state with that child state
             for tour in child_tours:
+                self.num_children+=1
                 #print("child tour: ", tour)
                 if getTourCost(tour, self.cost_graph) < getTourCost(current_tour, self.cost_graph):
                     current_tour = copy.deepcopy(tour)
@@ -62,15 +74,16 @@ class HillClimbing:
     # This method runs the hill climbing algorithm using random restart
     # Each time it "randomly restarts" the algorithm, it gives it random new start tour in hopes
     # of finding a better solution than the one already found
-    def randomRestart(self, num_restarts):
+    def randomRestart(self, cuttoff):
 
-        print("\nThe starting tour is: ", self.start_tour, " with a cost of: ", self.best_cost)
+        
+        num_restarts = 0 
         # does initial run, which calculates the best_tour
         self.calculateBestTour()
         #print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
         i = 0
         # loops as many times as specified by num_restarts (minus one because of the initial run)
-        while i < num_restarts - 1:
+        while num_restarts < cuttoff:
             # get a random start tour (note: may be one we've already done,
             # due to the nature of the hill climbing algorithm we don't know and don't care
             random_tour = self.grid.getRandomTour()
@@ -82,7 +95,10 @@ class HillClimbing:
             self.calculateBestTour()
             #print ("The current iteration found that the better tour would be: ", self.better_tour, " with a cost of: ", getTourCost(self.better_tour, self.cost_graph),'\n')
             #decrement restart count
-            num_restarts-=1
+            num_restarts+=1
+       
 
     def getBestTour(self):
         return self.best_tour
+
+    

@@ -28,6 +28,17 @@ class SimAnneal(object):
         self.stopping_iter = 1e10
         self.iteration = 1
 
+    #resets applicable attributes between runs
+    def reset (self):
+        self.best_tour = copy.deepcopy(self.start_tour)
+        self.curr_tour = self.grid.startingTour
+        self.curr_cost = util.getTourCost(self.start_tour, self.grid.costGraph)
+        self.best_cost = float("Inf")
+        self.iteration = 1
+        self.T = math.sqrt(self.grid.numCities)
+        self.start_tour
+        self.start_tour = self.grid.startingTour
+
     # Simulated Annealing core algorithm
     def anneal(self):
 
@@ -65,7 +76,7 @@ class SimAnneal(object):
         if candidate_cost < self.curr_cost:
             self.curr_cost, self.curr_tour = candidate_cost, candidate
             self.tour_list.append(candidate)
-            if candidate_cost < self.best_cost:
+            if candidate_cost <= self.best_cost:
                 self.best_cost, self.best_tour = candidate_cost, candidate
                 
         else:

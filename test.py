@@ -15,7 +15,7 @@ from util import *
 def main():
     
     #myGrid is a grid object
-    myGrid = grid.Grid(20)         
+    myGrid = grid.Grid(4)         
     myGrid.setGrid()
     myGrid.displayGrid()
     #cost_graph has the grid of flight costs
@@ -29,9 +29,10 @@ def main():
     anneal.anneal()
     print ("simulated annealing best cost: ", anneal.best_cost)
     print ("sim annealing best state is: ", anneal.best_tour)
+    num_iterations = anneal.iteration
 
     hc = hillclimbing.HillClimbing(myGrid)   
-    hc.randomRestart(5)
+    hc.randomRestart(num_iterations)
 
     print("best tour", hc.best_tour, "for cost of: ", getTourCost(hc.best_tour, cost_graph))
 
